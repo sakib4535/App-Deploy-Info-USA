@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoCare For USA</title>
+    <style>
+        /* Body styles with background image */
+        body {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: xx-large;
+            background-image: url('https://www.wallpaperup.com/uploads/wallpapers/2017/09/11/1098664/9eea1b178d96d3889215ba75d88d657c-500.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh; /* Make the background cover the full viewport height */
+        }
+
+        /* Black banner styles */
+        .banner {
+            background-color: #ecc7f1;
+            color: #ebe5e5;
+            text-align: center;
+            padding: 20px;
+            font-size: 60px;
+            border-bottom: 2px solid #e0dbd9;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Flag background for title */
+       /* Flag background for title */
+        .flag-background {
+            background-image: url('https://i.pinimg.com/736x/16/83/c8/1683c857dff3f4995f63e0c493f071e6--american-flag-pics-american-flag-wallpaper.jpg'); /* Replace with your flag image URL */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 20px 0;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: 50px;
+            /* Add border and shadow */
+            text-shadow: 20px 23px 40px rgba(0, 0, 0, 0.6);
+            border: 10px solid #0f0808;
+            padding: 10px;
+        }
+
+
+        /* Container styles for cities and states */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 80px; /* Adjust the margin-top to control space between banner and content */
+        }
+
+        /* City and state boxes */
+        .box {
+            background-color: rgba(238, 230, 230, 0.8); /* Semi-transparent white background */
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(2, 4, 1, 0.2);
+            padding: 20px;
+            max-width: 400px;
+            text-align: center;
+            transition: transform 0.2s;
+            margin: 10px;
+        }
+
+       /* City box styles with white border */
+        .city-box {
+            background-color: rgba(243, 91, 91, 0.8); /* Semi-transparent light blue background for cities */
+            border: 5px solid #fff; /* White border */
+        }
+
+
+        /* State box styles */
+        .state-box {
+            background-color: rgba(98, 157, 245, 0.8); /* Semi-transparent light blue background for states */
+            border: 5px solid #fff;
+        }
+
+        /* Box label styles */
+        .box h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #24282b;
+        }
+
+        /* Box description styles */
+        .box p {
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Box hover effect */
+        .box:hover {
+            transform: scale(1.05);
+        }
+
+        /* Link styles */
+        /* Link styles for "View Cities" */
+        a {
+            text-decoration: none;
+            color: #ffd700; /* Golden color */
+            font-weight: bold;
+            border: 2px solid #000; /* Black border */
+            padding: 5px 10px; /* Add padding for spacing */
+            border-radius: 5px; /* Add border radius for rounded corners */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+        }
+
+        a:hover {
+            background-color: #000; /* Black background on hover */
+            color: #ffd700; /* Golden text color on hover */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Black banner for the title -->
+    <div class="banner">
+        <!-- Flag background for title -->
+        <div class="flag-background">InfoCare For USA</div>
+    </div>
+
+    <!-- Container for city and state boxes -->
+    <div class="container">
+        <!-- City Box -->
+        <div class="box city-box">
+            <h2>Cities</h2>
+            <p>Explore a list of cities around the world and learn about their unique characteristics.</p>
+            <a href="{{ url_for('cities') }}">View Cities</a> <!-- Update this URL -->
+        </div>
+
+        <!-- State Box -->
+        <div class="box state-box">
+            <h2>States</h2>
+            <p>Discover information about states in different countries and explore their cultural diversity.</p>
+            <a href="{{ url_for('states') }}">View States</a> <!-- Update this URL -->
+        </div>
+    </div>
+</body>
+</html>

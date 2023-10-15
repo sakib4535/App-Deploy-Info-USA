@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Cities</title>
+    <style>
+        /* Reset default margin and padding for the body */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        /* Style for the main heading */
+        h1 {
+            background: linear-gradient(45deg, #FF5733, #33FF57, #5733FF, #FFFF33, #33FFFF);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin: 0;
+            /* Apply text shadow to create a sparkling effect */
+            text-shadow: 2px 2px 2px #000, -2px -2px 2px #000, 2px -2px 2px #000, -2px 2px 2px #000;
+        }
+
+        /* Style for the "List of Cities" text */
+        .sparkle-text {
+            letter-spacing: 5px; /* Increase letter spacing to add more space between characters */
+        }
+
+        /* Add CSS styles for city boxes */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        /* Style for the city boxes */
+        .city-box {
+            width: calc(33.33% - 20px); /* Adjust the width and spacing as needed */
+            margin: 10px;
+            border: 2px solid #3498db; /* Border color */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px; /* Spacing inside the box */
+            text-align: center;
+            position: relative;
+            overflow: visible;
+            transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effect */
+        }
+
+        /* Hover effect: Scale and shadow */
+        .city-box:hover {
+            transform: scale(1.05); /* Enlarge on hover */
+            box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow on hover */
+            background: #94eca3;
+        }
+
+        /* City name styles */
+        .city-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333; /* Text color */
+        }
+
+        /* Style for the city description */
+        .city-description {
+            display: none;
+            background-color: #fff; /* Background color parameter */
+            border: 1px solid #ddd; /* Border parameter */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: left;
+            position: absolute;
+            width: calc(100% - 40px);
+            left: 20px;
+            z-index: 1; /* Ensure description appears above other elements */
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Add smooth transition for animation */
+            transform: translateY(100%);
+            opacity: 0; /* Start with 0 opacity */
+            color: #333; /* Font color parameter */
+            font-size: 16px; /* Font size parameter */
+            max-width: 300px; /* Maximum width parameter */
+        }
+
+        /* Style for the description title */
+        .city-description h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Show the description when hovering over the city box */
+        .city-box:hover .city-description {
+            display: block;
+            transform: translateY(calc(100% + 10px)); /* Adjust the space between boxes (e.g., 10px) */
+        }
+
+        /* Define a list of border colors */
+        .border-colors {
+            color: transparent;
+        }
+
+        .border-colors li:nth-child(1) {
+            color: #FF5733; /* Red */
+        }
+
+        .border-colors li:nth-child(2) {
+            color: #33FF57; /* Green */
+        }
+
+        .border-colors li:nth-child(3) {
+            color: #5733FF; /* Blue */
+        }
+
+        .border-colors li:nth-child(4) {
+            color: #FFFF33; /* Yellow */
+        }
+
+        .border-colors li:nth-child(5) {
+            color: #33FFFF; /* Cyan */
+        }
+
+        /* Style for search bar and button */
+        .search-bar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0; /* Add margin to move the search bar down */
+        }
+
+        .search-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Style for the "List of Cities" banner */
+        h1 {
+            font-size: 36px; /* Increase font size */
+            font-weight: bold;
+            text-align: center;
+            padding: 20px; /* Add some padding for spacing */
+        }
+
+        /* Style for city rank */
+        .city-rank {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px; /* Adjust font size */
+            font-weight: bold;
+            color: #000; /* Rank color */
+        }
+    </style>
+</head>
+<body>
+    <h1><span class="sparkle-text">List of Cities</span></h1>
+    <div class="search-bar-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search for a City, example: 'Miami' or 'Boston'">
+        <button class="search-button" onclick="searchCities()">Search</button>
+    </div>
+    <div class="container">
+        {% set displayed_cities = [] %}
+        {% for city in cities %}
+            {% if city.name not in displayed_cities %}
+                {% set _ = displayed_cities.append(city.name) %}
+                <div class="city-box" style="border-color: {{ city.color }}">
+                    <span class="city-rank">{{ loop.index }}</span>
+                    <a href="{{ url_for('city_details', city_id=city.id) }}" class="city-name">{{ city.name }}</a>
+                    <div class="city-description">
+                        <h3>Description</h3>
+                        <p>This is the description of the city.</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- JavaScript for generating random colors and searching cities -->
+    <script>
+        // Function to generate a random color from the list of border colors
+        function random_color() {
+            const borderColors = ["#FF5733", "#33FF57", "#5733FF", "#FFFF33", "#33FFFF"];
+            const randomIndex = Math.floor(Math.random() * borderColors.length);
+            return borderColors[randomIndex];
+        }
+
+        // Apply random colors to city boxes
+        const cityBoxes = document.querySelectorAll('.city-box');
+        cityBoxes.forEach(function (box) {
+            box.style.borderColor = random_color();
+        });
+
+        // Function to search cities based on input
+        function searchCities() {
+            const input = document.getElementById('searchInput').value.toUpperCase();
+            const container = document.querySelector('.container');
+            const cityBoxes = container.querySelectorAll('.city-box');
+
+            cityBoxes.forEach(function (box) {
+                const cityName = box.querySelector('.city-name').textContent.toUpperCase();
+                if (cityName.indexOf(input) > -1) {
+                    box.style.display = '';
+                } else {
+                    box.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

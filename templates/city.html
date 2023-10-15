@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ city.name }} Details</title>
+    <!-- Include Leaflet CSS and JavaScript -->
+    <!-- Add Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add Bootstrap JavaScript and jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header styles */
+        h1 {
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin: 0;
+        }
+
+        /* City details container styles */
+        .city-details {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        /* City name styles */
+        .city-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* City info styles */
+        .city-info {
+            margin: 10px 0;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Back link styles */
+        .back-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Link styles */
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Add styles for the universities box */
+        .universities-box {
+            margin: 40px auto;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #f0f0f0; /* Set your desired margin color here */
+            border: 2px solid #f7af2b; /* Add a border like a picture frame */
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        /* Style for the universities heading */
+        .universities-box h2 {
+            font-size: 50px;
+            margin-bottom: 10px;
+            font-weight: 200;
+        }
+
+        /* Style for individual universities */
+        .university {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        /* Adjust the link styles if needed */
+        .university a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .university a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style for the map container */
+        #map {
+            height: 400px;
+            margin-top: 20px;
+        }
+
+        /* CSS for news carousel */
+        .news-carousel {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .news-slider {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .news-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            overflow-x: auto;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .news-item {
+            flex: 0 0 30%;
+            margin: 0 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .news-content {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .news-image img {
+            max-width: 100%; /* Resize images to fit their containers */
+            height: auto;
+        }
+
+        /* CSS for centered header with a broad underline */
+        .news-header {
+            text-align: center;
+            border-bottom: 8px solid #32a4f0;
+            display: block;
+            margin: 0 auto 20px;
+            width: fit-content;
+            text-decoration: overline;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bolder;
+        }
+
+
+
+        /* CSS for carousel navigation buttons */
+        .prev-button,
+        .next-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ city.name }} Details</h1>
+
+    <!-- Map container -->
+    <div id="map"></div>
+
+    <div class="city-details">
+        <p class="city-name">{{ city.name }}</p>
+        <div class="city-info">
+            <span>State:</span>
+            <span>{{ city.state }}</span>
+        </div>
+        <div class="city-info">
+            <span>Latitude:</span>
+            <span>{{ city.latitude }}</span>
+        </div>
+        <div class="city-info">
+            <span>Longitude:</span>
+            <span>{{ city.longitude }}</span>
+        </div>
+    </div>
+
+    <!-- Create a centered box for universities -->
+    <div class="universities-box">
+        <h2>Universities in {{ city.name }}</h2>
+        <div class="universities">
+            {% for university in universities %}
+                <div class="university">
+                    {{ university.name }} - {{ university.country }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="education-news">
+        <h2 class="news-header">Education News in {{ city.name }}</h2>
+        <div class="news-carousel">
+            <div class="news-slider">
+                <ul class="news-list">
+                    {% for article in education_news %}
+                        <li class="news-item">
+                            <div class="news-content">
+                                <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
+                                <p>{{ article.description }}</p>
+                            </div>
+                            <div class="news-image">
+                                <img src="{{ article.urlToImage }}" alt="News Image">
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button class="prev-button" onclick="moveSlider(-1)">Previous</button>
+            <button class="next-button" onclick="moveSlider(1)">Next</button>
+        </div>
+    </div>
+
+
+    <div class="back-link">
+        <a href="{{ url_for('index') }}">Back to City List</a>
+    </div>
+
+    <!-- JavaScript for creating the Leaflet map -->
+    <script>
+        // Function to initialize the map
+        function initMap() {
+            // Initialize the map
+            var map = L.map('map').setView([{{ city.latitude }}, {{ city.longitude }}], 12);
+
+            // Add a tile layer (e.g., OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+            }).addTo(map);
+
+            // Add a marker for the city
+            L.marker([{{ city.latitude }}, {{ city.longitude }}]).addTo(map)
+                .bindPopup('{{ city.name }}')
+                .openPopup();
+        }
+
+        // Call the initMap function when the page is fully loaded
+        $(document).ready(function () {
+            initMap();
+        });
+
+        /* JavaScript to handle sliding */
+        let currentIndex = 0;
+        const newsList = document.querySelector('.news-list');
+        const newsItems = document.querySelectorAll('.news-item');
+
+        function moveSlider(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = 0;
+            }
+            if (currentIndex >= newsItems.length - 2) {
+                currentIndex = newsItems.length - 2;
+            }
+            const translateX = -currentIndex * (newsItems[0].offsetWidth + 20); // Adjust 20 for margin
+            newsList.style.transform = `translateX(${translateX}px)`;
+        }
+    </script>
+</body>
+</html>
